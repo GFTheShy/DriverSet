@@ -1,0 +1,3 @@
+---- DMA_fifo_threshold_level Matches (2 in 1 files) ----
+{anonDMA_InitTypeDef} in stm32f4xx_dma.h (C:\Users\Administrator\Desktop\stm32学习\libraries\STM32F4xx_StdPeriph_Driver\inc) :                                         This parameter can be a value of @ref DMA_fifo_threshold_level */
+stm32f4xx_dma.h (C:\Users\Administrator\Desktop\stm32学习\libraries\STM32F4xx_StdPeriph_Driver\inc) line 286 : /** @defgroup DMA_fifo_threshold_level 

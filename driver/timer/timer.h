@@ -1,0 +1,10 @@
+#ifndef _TIMER_H__
+#define _TIMER_H__
+#include "stm32f4xx.h"
+
+void TIME6_Int_Init(u32 arr,u16 psc);
+void TIME5_Int_Init(u32 arr,u16 psc);
+
+
+#endif
+

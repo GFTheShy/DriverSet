@@ -1,0 +1,74 @@
+#include "drv_led.h"
+#include "drv_bee.h"
+#include "drv_key.h"
+#include "drv_oled.h"
+#include "exit.h"
+#include "drv_systick.h"
+#include "drv_key2.h"
+#include "drv_iwdog.h"
+#include "usart.h"
+#include "string.h"
+
+
+int main(void)
+{
+	u8 len,t;
+	//u16 times=0;
+	
+	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
+	drv_led_init();
+	drv_bee_init();
+	
+	/*drv_led_init();
+	drv_systick_init(168);
+	drv_key2_init();
+	
+
+
+	drv_systick_delay_ms(500);
+
+	drv_bee_open();
+
+	
+		drv_iwdog_init(4,1000);
+
+	while (1)
+	{
+		if(GPIO_ReadInputDataBit(GPIOE,GPIO_Pin_4)==RESET){
+			IWDG_ReloadCounter();
+		}
+		drv_systick_delay_ms(20);
+	}*/
+
+	My_USART1_Init();
+	printf("hhhhhhhhhh\r\n");
+
+	while(1)
+	{
+		if(USART_RX_STA&0x8000)
+		{	
+			if(strcmp((char *)USART_RX_BUF,"o")==0){drv_bee_open();
+				memset(USART_RX_BUF, 0, sizeof(USART_RX_BUF)); 
+			}
+			if(strcmp((char *)USART_RX_BUF,"openled")==0){drv_led_open(8);
+				memset(USART_RX_BUF, 0, sizeof(USART_RX_BUF)); 
+			}
+			if(strcmp((char *)USART_RX_BUF,"closeled")==0){drv_led_close(8);
+				memset(USART_RX_BUF, 0, sizeof(USART_RX_BUF)); 
+			}
+			if(strcmp((char *)USART_RX_BUF,"c")==0)drv_bee_close();
+			len=USART_RX_STA&0x3fff;
+			for(t=0;t<len;t++)
+			{
+				USART_SendData(USART1,USART_RX_BUF[t]);
+				while(USART_GetFlagStatus(USART1,USART_FLAG_TC)!=SET);
+			}
+			USART_RX_STA=0;
+			memset(USART_RX_BUF, 0, sizeof(USART_RX_BUF)); 
+		}
+		
+
+	}
+	
+}
+
